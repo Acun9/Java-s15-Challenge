@@ -7,10 +7,10 @@ public abstract class Item implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    protected String id;
-    protected String title;
-    protected String publisher;
-    protected int year;
+    protected String id;        // sistem içi id
+    protected String title;     // başlık / isim
+    protected String publisher; // yayınevi vb.
+    protected int year;         // yayın yılı
 
     public Item(String id, String title, String publisher, int year) {
         this.id = id;
@@ -42,6 +42,7 @@ public abstract class Item implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("[%s] %s (%d) - %s", id, title, year, publisher);
+        // Alt sınıflar (örneğin Book) daha detaylı gösterim yapacak; burada sade bilgi verelim
+        return String.format("Başlık: %s (%d)", title, year);
     }
 }

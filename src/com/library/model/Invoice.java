@@ -52,6 +52,7 @@ public class Invoice implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Invoice[%s] loan=%s amount=%s paid=%s", id, loanId, amount, paid);
+        String durum = paid ? "Ödendi" : "Ödenmedi";
+        return String.format("Tutar: %s | Tarih: %s | Durum: %s", amount, issuedDate, durum);
     }
 }

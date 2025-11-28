@@ -2,29 +2,37 @@ package com.library.model;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class Book extends Item implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private final List<String> authors;
-    private final String isbn;
-    private int copies;
-    private final Set<String> genres = new HashSet<>();
+    private final List<String> authors;      // kitap yazarları
+    private final String isbn;               // ISBN numarası
+    private int copies;                      // kütüphanedeki kopya sayısı
+    private final Set<String> genres = new HashSet<>(); // kitabın türleri
 
     public Book(String id, String title, List<String> authors, String publisher, int year, String isbn, int copies) {
         super(id, title, publisher, year);
-        this.authors = authors;
+        this.authors = new ArrayList<>(authors);
         this.isbn = isbn;
         this.copies = copies;
     }
 
     public List<String> getAuthors() {
-        return authors;
+        // dışarıya sadece okunabilir liste veriyorum
+        return Collections.unmodifiableList(authors);
+    }
+
+    public void addAuthor(String author) {
+        if (author != null && !author.isBlank()) {
+            authors.add(author.trim());
+        }
+    }
+
+    public void removeAuthor(String author) {
+        authors.removeIf(a -> Objects.equals(a, author));
     }
 
     public String getIsbn() {
@@ -40,10 +48,21 @@ public class Book extends Item implements Serializable {
     }
 
     public Set<String> getGenres() {
-        return genres;
+        // türleri de yine sadece okunabilir şekilde dönüyorum
+        return Collections.unmodifiableSet(genres);
     }
 
-    // Başlığı güncellemek için setter (kitap güncelleme senaryosu)
+    public void addGenre(String genre) {
+        if (genre != null && !genre.isBlank()) {
+            genres.add(genre.trim());
+        }
+    }
+
+    public void removeGenre(String genre) {
+        genres.removeIf(g -> Objects.equals(g, genre));
+    }
+
+    // başlık güncelleme (güncelleme ekranında kullanıyorum)
     public void setTitle(String title) {
         this.title = title;
     }
@@ -53,7 +72,7 @@ public class Book extends Item implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        // Domain açısından ISBN aynıysa kitabı aynı kabul ediyoruz
+        // ISBN aynıysa kitabı aynı kabul ediyorum
         return Objects.equals(isbn, book.isbn);
     }
 
@@ -66,8 +85,6 @@ public class Book extends Item implements Serializable {
     public String toString() {
         String tur = String.join(",", genres);
         String yazarlar = String.join(",", authors);
-        // Format:
-        // Kitap Adı: <title> (<year>) | Yazar:<authors> | Tür:<genres> | Yayınevi:<publisher> | Kopya sayısı:<copies> | ISBN:<isbn>
         return String.format("Kitap Adı: %s (%d) | Yazar:%s | Tür:%s | Yayınevi:%s | Kopya sayısı:%d | ISBN:%s",
                 title, year, yazarlar, tur, publisher, copies, isbn);
     }

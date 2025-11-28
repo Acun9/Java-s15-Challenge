@@ -31,7 +31,7 @@ public class ConsoleUI {
     public void start() {
         Scanner scanner = new Scanner(System.in);
 
-        // Uygulama başlarken mevcut verileri otomatik yükle
+        // açılışta diskteki verileri içeri alıyorum
         handleLoad();
 
         System.out.println("=== Kütüphane Sistemi ===");
@@ -62,7 +62,7 @@ public class ConsoleUI {
             }
         }
 
-        // Uygulamadan çıkarken verileri otomatik kaydet
+        // çıkarken her şeyi kaydedip öyle kapanıyorum
         handleSave();
 
         System.out.println("Uygulamadan çıkılıyor...");
@@ -72,101 +72,121 @@ public class ConsoleUI {
     // --- Alt menüler ---
 
     private void handleBookMenu(Scanner scanner) {
-        System.out.println("\n--- Kitap İşlemleri ---");
-        System.out.println("1. Kitap Ekle");
-        System.out.println("2. Kitap Güncelle");
-        System.out.println("3. Kitap Sil");
-        System.out.println("4. Kitap Ara (ID/İsim/Yazar/ISBN)");
-        System.out.println("5. Tüm Kitapları Listele");
-        System.out.println("6. Belirli Yazarın Kitapları");
-        System.out.println("7. Belirli Kategorideki Kitaplar");
-        System.out.println("8. Geri");
-        System.out.print("Seçiminiz: ");
-        String choice = scanner.nextLine().trim();
-        switch (choice) {
-            case "1":
-                handleAddBook(scanner);
-                break;
-            case "2":
-                handleUpdateBook(scanner);
-                break;
-            case "3":
-                handleDeleteBook(scanner);
-                break;
-            case "4":
-                handleSearchBook(scanner);
-                break;
-            case "5":
-                handleListBooks();
-                break;
-            case "6":
-                handleListBooksByAuthor(scanner);
-                break;
-            case "7":
-                handleListBooksByGenre(scanner);
-                break;
-            case "8":
-                return;
-            default:
-                System.out.println("Geçersiz seçenek.");
+        boolean inMenu = true;
+        while (inMenu) {
+            System.out.println("\n--- Kitap İşlemleri ---");
+            System.out.println("1. Kitap Ekle");
+            System.out.println("2. Kitap Güncelle");
+            System.out.println("3. Kitap Sil");
+            System.out.println("4. Kitap Ara (ID/İsim/Yazar/ISBN)");
+            System.out.println("5. Tüm Kitapları Listele");
+            System.out.println("6. Belirli Yazarın Kitapları");
+            System.out.println("7. Belirli Kategorideki Kitaplar");
+            System.out.println("8. Geri");
+            System.out.print("Seçiminiz: ");
+            String choice = scanner.nextLine().trim();
+            switch (choice) {
+                case "1":
+                    handleAddBook(scanner);
+                    break;
+                case "2":
+                    handleUpdateBook(scanner);
+                    break;
+                case "3":
+                    handleDeleteBook(scanner);
+                    break;
+                case "4":
+                    handleSearchBook(scanner);
+                    break;
+                case "5":
+                    handleListBooks();
+                    break;
+                case "6":
+                    handleListBooksByAuthor(scanner);
+                    break;
+                case "7":
+                    handleListBooksByGenre(scanner);
+                    break;
+                case "8":
+                    inMenu = false;
+                    break;
+                default:
+                    System.out.println("Geçersiz seçenek, tekrar deneyin.");
+            }
         }
     }
 
     private void handleUserMenu(Scanner scanner) {
-        System.out.println("\n--- Üye İşlemleri ---");
-        System.out.println("1. Üye Ekle");
-        System.out.println("2. Üyeleri Listele");
-        System.out.println("3. Geri");
-        System.out.print("Seçiminiz: ");
-        String choice = scanner.nextLine().trim();
-        switch (choice) {
-            case "1":
-                handleAddUser(scanner);
-                break;
-            case "2":
-                handleListUsers();
-                break;
-            case "3":
-                return;
-            default:
-                System.out.println("Geçersiz seçenek.");
+        boolean inMenu = true;
+        while (inMenu) {
+            System.out.println("\n--- Üye İşlemleri ---");
+            System.out.println("1. Üye Ekle");
+            System.out.println("2. Üyeleri Listele");
+            System.out.println("3. Üye Sil");
+            System.out.println("4. Geri");
+            System.out.print("Seçiminiz: ");
+            String choice = scanner.nextLine().trim();
+            switch (choice) {
+                case "1":
+                    handleAddUser(scanner);
+                    break;
+                case "2":
+                    handleListUsers();
+                    break;
+                case "3":
+                    handleDeleteUser(scanner);
+                    break;
+                case "4":
+                    inMenu = false;
+                    break;
+                default:
+                    System.out.println("Geçersiz seçenek, tekrar deneyin.");
+            }
         }
     }
 
     private void handleLoanMenu(Scanner scanner) {
-        System.out.println("\n--- Ödünç/İade İşlemleri ---");
-        System.out.println("1. Ödünç Al");
-        System.out.println("2. Teslim Et");
-        System.out.println("3. Ödünç Listesi");
-        System.out.println("4. Fatura Listesi");
-        System.out.println("5. Geri");
-        System.out.print("Seçiminiz: ");
-        String choice = scanner.nextLine().trim();
-        switch (choice) {
-            case "1":
-                handleBorrow(scanner);
-                break;
-            case "2":
-                handleReturn(scanner);
-                break;
-            case "3":
-                handleListLoans();
-                break;
-            case "4":
-                handleListInvoices();
-                break;
-            case "5":
-                return;
-            default:
-                System.out.println("Geçersiz seçenek.");
+        boolean inMenu = true;
+        while (inMenu) {
+            System.out.println("\n--- Ödünç/İade İşlemleri ---");
+            System.out.println("1. Ödünç Al");
+            System.out.println("2. Teslim Et");
+            System.out.println("3. Ödünç Listesi");
+            System.out.println("4. Fatura Listesi");
+            System.out.println("5. Geri");
+            System.out.print("Seçiminiz: ");
+            String choice = scanner.nextLine().trim();
+            switch (choice) {
+                case "1":
+                    handleBorrow(scanner);
+                    break;
+                case "2":
+                    handleReturn(scanner);
+                    break;
+                case "3":
+                    handleListLoans();
+                    break;
+                case "4":
+                    handleListInvoices();
+                    break;
+                case "5":
+                    inMenu = false;
+                    break;
+                default:
+                    System.out.println("Geçersiz seçenek, tekrar deneyin.");
+            }
         }
     }
 
     // --- Kitap işlemleri ---
 
     private void handleAddBook(Scanner scanner) {
-        System.out.print("Kitap Adı: ");
+        System.out.print("Kitap Adı (boş bırakıp Enter ile iptal): ");
         String title = scanner.nextLine().trim();
+        if (title.isBlank()) {
+            System.out.println("İşlem iptal edildi.");
+            return;
+        }
         System.out.print("Yazar(lar) (virgülle ayırın): ");
         String authorsLine = scanner.nextLine().trim();
         System.out.print("Yayınevi: ");
@@ -174,7 +194,10 @@ public class ConsoleUI {
         System.out.print("Yayın Yılı: ");
         int year = 0;
         try {
-            year = Integer.parseInt(scanner.nextLine().trim());
+            String yearStr = scanner.nextLine().trim();
+            if (!yearStr.isBlank()) {
+                year = Integer.parseInt(yearStr);
+            }
         } catch (NumberFormatException e) {
             System.out.println("Yıl okunamadı, 0 olarak ayarlandı.");
         }
@@ -183,17 +206,24 @@ public class ConsoleUI {
         System.out.print("Kopya Sayısı: ");
         int copies = 1;
         try {
-            copies = Integer.parseInt(scanner.nextLine().trim());
+            String copiesStr = scanner.nextLine().trim();
+            if (!copiesStr.isBlank()) {
+                copies = Integer.parseInt(copiesStr);
+            }
         } catch (NumberFormatException e) {
             System.out.println("Kopya sayısı okunamadı, 1 olarak ayarlandı.");
         }
         System.out.print("Kategoriler (virgülle ayırın, boş bırakılabilir): ");
         String genresLine = scanner.nextLine().trim();
 
-        Book book = new Book(null, title, List.of(authorsLine.split("\\s*,\\s*")), publisher, year, isbn, copies);
+        List<String> authors = authorsLine.isBlank()
+                ? List.of()
+                : List.of(authorsLine.split("\\s*,\\s*"));
+
+        Book book = new Book(null, title, authors, publisher, year, isbn, copies);
         if (!genresLine.isBlank()) {
             for (String g : genresLine.split("\\s*,\\s*")) {
-                book.getGenres().add(g);
+                book.addGenre(g);
             }
         }
         try {
@@ -214,11 +244,15 @@ public class ConsoleUI {
         }
         Book book = opt.get();
         System.out.println("Mevcut: " + book);
+
+        // Başlık güncelleme
         System.out.print("Yeni başlık (boş bırakılırsa değişmez): ");
         String newTitle = scanner.nextLine().trim();
         if (!newTitle.isBlank()) {
             book.setTitle(newTitle);
         }
+
+        // Kopya sayısı güncelleme
         System.out.print("Yeni kopya sayısı (boş bırakılırsa değişmez): ");
         String copiesStr = scanner.nextLine().trim();
         if (!copiesStr.isBlank()) {
@@ -229,6 +263,40 @@ public class ConsoleUI {
                 System.out.println("Kopya sayısı geçersiz, değiştirilmedi.");
             }
         }
+
+        // Yazarları tamamen yeniden girme opsiyonu
+        System.out.print("Yazar(lar)ı yeniden girmek ister misiniz? (E/H): ");
+        String authorChoice = scanner.nextLine().trim();
+        if (authorChoice.equalsIgnoreCase("E")) {
+            System.out.print("Yeni yazar(lar) (virgülle ayırın): ");
+            String authorsLine = scanner.nextLine().trim();
+            // Mevcut yazarları temizleyip yeniden ekleyelim
+            for (String existing : List.copyOf(book.getAuthors())) {
+                book.removeAuthor(existing);
+            }
+            if (!authorsLine.isBlank()) {
+                for (String a : authorsLine.split("\\s*,\\s*")) {
+                    book.addAuthor(a);
+                }
+            }
+        }
+
+        // Türleri tamamen yeniden girme opsiyonu
+        System.out.print("Tür(leri) yeniden girmek ister misiniz? (E/H): ");
+        String genreChoice = scanner.nextLine().trim();
+        if (genreChoice.equalsIgnoreCase("E")) {
+            System.out.print("Yeni türler (virgülle ayırın, boş bırakılabilir): ");
+            String genresLine = scanner.nextLine().trim();
+            for (String existing : List.copyOf(book.getGenres())) {
+                book.removeGenre(existing);
+            }
+            if (!genresLine.isBlank()) {
+                for (String g : genresLine.split("\\s*,\\s*")) {
+                    book.addGenre(g);
+                }
+            }
+        }
+
         catalogService.updateBook(book);
         System.out.println("Güncellenmiş kitap: " + book);
     }
@@ -245,8 +313,12 @@ public class ConsoleUI {
     }
 
     private void handleSearchBook(Scanner scanner) {
-        System.out.print("Arama terimi (ID, isim, yazar veya ISBN): ");
+        System.out.print("Arama terimi (ID, isim, yazar veya ISBN) - geri dönmek için boş bırakıp Enter'a basın: ");
         String query = scanner.nextLine().trim();
+        if (query.isBlank()) {
+            System.out.println("Arama iptal edildi.");
+            return;
+        }
         List<Book> results = catalogService.search(query);
         if (results.isEmpty()) {
             System.out.println("Sonuç bulunamadı.");
@@ -271,8 +343,12 @@ public class ConsoleUI {
     }
 
     private void handleListBooksByAuthor(Scanner scanner) {
-        System.out.print("Yazar adı: ");
+        System.out.print("Yazar adı (boş bırakıp Enter ile iptal): ");
         String author = scanner.nextLine().trim();
+        if (author.isBlank()) {
+            System.out.println("İşlem iptal edildi.");
+            return;
+        }
         List<Book> results = catalogService.searchByAuthor(author);
         if (results.isEmpty()) {
             System.out.println("Bu yazara ait kitap bulunamadı.");
@@ -285,8 +361,12 @@ public class ConsoleUI {
     }
 
     private void handleListBooksByGenre(Scanner scanner) {
-        System.out.print("Kategori adı: ");
+        System.out.print("Kategori adı (boş bırakıp Enter ile iptal): ");
         String genre = scanner.nextLine().trim();
+        if (genre.isBlank()) {
+            System.out.println("İşlem iptal edildi.");
+            return;
+        }
         List<Book> results = catalogService.searchByGenre(genre);
         if (results.isEmpty()) {
             System.out.println("Bu kategoride kitap bulunamadı.");
@@ -301,8 +381,12 @@ public class ConsoleUI {
     // --- Üye işlemleri ---
 
     private void handleAddUser(Scanner scanner) {
-        System.out.print("Ad Soyad: ");
+        System.out.print("Ad Soyad (boş bırakıp Enter ile iptal): ");
         String name = scanner.nextLine().trim();
+        if (name.isBlank()) {
+            System.out.println("İşlem iptal edildi.");
+            return;
+        }
         System.out.print("Email: ");
         String email = scanner.nextLine().trim();
         try {
@@ -326,11 +410,38 @@ public class ConsoleUI {
         }
     }
 
+    private void handleDeleteUser(Scanner scanner) {
+        System.out.print("Silmek istediğiniz üyenin e-posta adresi: ");
+        String email = scanner.nextLine().trim();
+        Optional<User> userOpt = userRepo.findByEmail(email);
+        if (userOpt.isEmpty()) {
+            System.out.println("Bu e-posta ile kayıtlı üye bulunamadı.");
+            return;
+        }
+        User user = userOpt.get();
+
+        // Üyenin aktif ödünçleri var mı kontrol et
+        boolean hasActiveLoans = loanRepo.findAll().stream()
+                .anyMatch(loan -> loan.getUserId().equals(user.getId()) && !loan.isReturned());
+
+        if (hasActiveLoans) {
+            System.out.println("Bu üyenin üzerinde kiralık kitap(lar) var. Önce tüm kitaplar iade edilmelidir.");
+            return;
+        }
+
+        userRepo.deleteById(user.getId());
+        System.out.println("Üye silindi: " + user);
+    }
+
     // --- Ödünç/İade işlemleri ---
 
     private void handleBorrow(Scanner scanner) {
-        System.out.print("Kullanıcı e-posta adresi: ");
+        System.out.print("Kullanıcı e-posta adresi (boş bırakıp Enter ile iptal): ");
         String email = scanner.nextLine().trim();
+        if (email.isBlank()) {
+            System.out.println("İşlem iptal edildi.");
+            return;
+        }
         Optional<User> userOpt = userRepo.findByEmail(email);
         if (userOpt.isEmpty()) {
             System.out.println("Bu e-posta ile kayıtlı bir üye bulunamadı.");
@@ -339,9 +450,13 @@ public class ConsoleUI {
         User user = userOpt.get();
         System.out.println("Seçilen üye: " + user);
 
-        // Kitabı ISBN ezberletmek yerine aramayla seçtirelim
-        System.out.print("Kitap arama terimi (isim / yazar / ISBN): ");
+        // Kitabı ISBN ezberletmek yerine aramayla seçtiriyorum
+        System.out.print("Kitap arama terimi (isim / yazar / ISBN) - boş bırakıp Enter'a basarsan bu menüye geri dönersin: ");
         String query = scanner.nextLine().trim();
+        if (query.isBlank()) {
+            System.out.println("İşlem iptal edildi.");
+            return;
+        }
         List<Book> candidates = catalogService.search(query);
         if (candidates.isEmpty()) {
             System.out.println("Bu arama ile eşleşen kitap bulunamadı.");
@@ -364,8 +479,12 @@ public class ConsoleUI {
         for (int i = 0; i < candidates.size(); i++) {
             System.out.printf("%d) %s%n", i + 1, candidates.get(i));
         }
-        System.out.print("Seçmek istediğiniz kitabın numarası: ");
+        System.out.print("Seçmek istediğiniz kitabın numarası (vazgeçmek için boş bırak): ");
         String idxStr = scanner.nextLine().trim();
+        if (idxStr.isBlank()) {
+            System.out.println("İşlem iptal edildi.");
+            return;
+        }
         int idx;
         try {
             idx = Integer.parseInt(idxStr);
@@ -394,22 +513,83 @@ public class ConsoleUI {
         }
         System.out.println("--- Ödünç Listesi ---");
         for (Loan l : all) {
-            System.out.println(l);
+            String userName = userRepo.findById(l.getUserId())
+                    .map(User::getName)
+                    .orElse("Bilinmeyen Üye");
+            String bookTitle = bookRepo.findById(l.getBookId())
+                    .map(Book::getTitle)
+                    .orElse("Bilinmeyen Kitap");
+            String durum = l.isReturned() ? "İade Edildi" : "Aktif";
+            System.out.printf("Kullanıcı: %s | Kitap: %s | Ödünç Tarihi: %s | Son Tarih: %s | Durum: %s%n",
+                    userName, bookTitle, l.getLoanDate(), l.getDueDate(), durum);
         }
     }
 
     private void handleReturn(Scanner scanner) {
-        System.out.print("Loan ID: ");
-        String loanId = scanner.nextLine().trim();
+        System.out.print("Kullanıcı e-posta adresi (boş bırakıp Enter ile iptal): ");
+        String email = scanner.nextLine().trim();
+        if (email.isBlank()) {
+            System.out.println("İşlem iptal edildi.");
+            return;
+        }
+
+        Optional<User> userOpt = userRepo.findByEmail(email);
+        if (userOpt.isEmpty()) {
+            System.out.println("Bu e-posta ile kayıtlı bir üye bulunamadı.");
+            return;
+        }
+        User user = userOpt.get();
+
+        // Kullanıcının aktif (iade edilmemiş) ödünçlerini bul
+        List<Loan> userActiveLoans = loanRepo.findAll().stream()
+                .filter(loan -> loan.getUserId().equals(user.getId()) && !loan.isReturned())
+                .toList();
+
+        if (userActiveLoans.isEmpty()) {
+            System.out.println("Bu kullanıcının üzerinde aktif ödünç bulunmuyor.");
+            return;
+        }
+
+        System.out.println("--- Aktif Ödünçler ---");
+        for (int i = 0; i < userActiveLoans.size(); i++) {
+            Loan loan = userActiveLoans.get(i);
+            String bookTitle = bookRepo.findById(loan.getBookId())
+                    .map(Book::getTitle)
+                    .orElse("Bilinmeyen Kitap");
+            System.out.printf("%d) Kitap: %s | Ödünç Tarihi: %s | Son Tarih: %s%n",
+                    i + 1, bookTitle, loan.getLoanDate(), loan.getDueDate());
+        }
+
+        System.out.print("İade etmek istediğiniz ödünç kaydının numarası (vazgeçmek için boş bırak): ");
+        String idxStr = scanner.nextLine().trim();
+        if (idxStr.isBlank()) {
+            System.out.println("İşlem iptal edildi.");
+            return;
+        }
+        int idx;
         try {
-            loanService.returnBook(loanId);
-            System.out.println("Teslim edildi: " + loanId);
+            idx = Integer.parseInt(idxStr);
+        } catch (NumberFormatException e) {
+            System.out.println("Geçersiz seçim.");
+            return;
+        }
+        if (idx < 1 || idx > userActiveLoans.size()) {
+            System.out.println("Geçersiz seçim.");
+            return;
+        }
+
+        Loan selectedLoan = userActiveLoans.get(idx - 1);
+        try {
+            loanService.returnBook(selectedLoan.getId());
+            System.out.println("Teslim edildi: " + bookRepo.findById(selectedLoan.getBookId())
+                    .map(Book::getTitle)
+                    .orElse(selectedLoan.getBookId()));
         } catch (IllegalStateException e) {
             System.out.println("Hata: " + e.getMessage());
         }
     }
 
-    // --- Fatura raporu ---
+    // --- Fatura ---
 
     private void handleListInvoices() {
         var all = invoiceService.getAllInvoices();
@@ -421,7 +601,7 @@ public class ConsoleUI {
         all.forEach(System.out::println);
     }
 
-    // --- Kalıcı saklama ---
+    // --- Dosyaya kaydet / dosyadan yükle ---
 
     private void handleSave() {
         try {

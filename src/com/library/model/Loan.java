@@ -57,6 +57,7 @@ public class Loan implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Loan[%s] user=%s book=%s loanDate=%s due=%s returned=%s", id, userId, bookId, loanDate, dueDate, returned);
+        String durum = returned ? "İade Edildi" : "Aktif";
+        return String.format("Ödünç Tarihi: %s | Son Tarih: %s | Durum: %s", loanDate, dueDate, durum);
     }
 }

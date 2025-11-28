@@ -7,9 +7,9 @@ public abstract class Person implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    protected String id;
-    protected String name;
-    protected String email;
+    protected String id;      // sistemdeki benzersiz kimlik
+    protected String name;    // ad soyad
+    protected String email;   // iletişim e-postası
 
     public Person(String id, String name, String email) {
         this.id = id;
@@ -21,7 +21,6 @@ public abstract class Person implements Serializable {
         return id;
     }
 
-    // Yeni: id setter eklendi (repository'lerin id ataması için)
     public void setId(String id) {
         this.id = id;
     }
@@ -36,7 +35,6 @@ public abstract class Person implements Serializable {
 
     @Override
     public String toString() {
-        // ID'yi de göstererek console'da kullanıcıyı rahatça referans alalım
-        return String.format("%s | %s (%s)", id == null ? "(no-id)" : id, name, email);
+        return String.format("Ad: %s | E-posta: %s", name, email);
     }
 }
